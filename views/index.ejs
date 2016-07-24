@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Forging Profits</title>
+		<link rel='stylesheet' href='/stylesheets/style.css' />
+		<!-- JQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		
+		<script type="text/javascript">
+			function getPrice(itemId, callback) {
+				console.log('Get Price');
+				$.get('api/rs/price/'+itemId, function( data ) {
+					console.log(data);
+					callback(data.price);
+				});
+			}
+			function getItemInformation(itemId, callback) {
+				console.log('Get Item Information');
+				$.get('api/rs/itemInformation/'+itemId, function( data ) {
+					console.log(data);
+					callback(data.item);
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Forging Profits</h1>
+		<span id="test"></span>
+		<script>
+			getPrice(2363, function(price) {
+				$("#test").text(price);
+			});
+		</script>
+	</body>
+</html>
