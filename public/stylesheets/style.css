@@ -15,8 +15,7 @@ a:hover {
 }
 
 footer {
-	margin-left: auto;
-	margin-right: auto;
+	width: 100%;
 	text-align: center;
 	font-size: 12px;
 }
