@@ -1,35 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<title>Forging Profits</title>
-		<link rel='stylesheet' href='/stylesheets/style.css' />
-		<!-- JQuery -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<!-- Meta -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<script type="text/javascript">
-			function getPrice(itemId, callback) {
-				console.log('Get Price');
-				$.get('api/rs/price/'+itemId, function( data ) {
-					console.log(data);
-					callback(data.price);
-				});
-			}
-			function getItemInformation(itemId, callback) {
-				console.log('Get Item Information');
-				$.get('api/rs/itemInformation/'+itemId, function( data ) {
-					console.log(data);
-					callback(data.item);
-				});
-			}
-		</script>
+		<title>Forging Profits</title>
+		
+		<!-- JQuery -->
+		<script src="/bower/jquery/jquery.min.js"></script>
+		
+		<!-- Angular: Essential Libraries -->
+		<script src="/bower/angular/angular.min.js"></script>
+		<script src="/bower/angular-route/angular-route.min.js"></script>
+		
+		<!-- Angular: Filters -->
+		<script src="/javascripts/filters/_filters.js"></script>
+		
+		<!-- Angular: Services -->
+		<script src="/javascripts/services/_services.js"></script>
+		<script src="/javascripts/services/runescapeService.js"></script>
+		
+		<!-- Angular: Controllers -->
+		<script src="/javascripts/controllers/_controllers.js"></script>
+		<script src="/javascripts/controllers/homeController.js"></script>
+		<!-- Profit Controllers -->
+		<script src="/javascripts/controllers/profit/smithingController.js"></script>
+		
+		<!-- Angular: Main App -->
+		<script src="/javascripts/forgingProfitsApp.js"></script>
+		
+		<!-- Bootstrap: JS -->
+		
+		<!-- Bootstrap: CSS -->
+		
+		<!-- CSS Styling -->
+		<link rel="stylesheet" href="/stylesheets/style.css" />
+		
 	</head>
-	<body>
-		<h1>Forging Profits</h1>
-		<span id="test"></span>
-		<script>
-			getPrice(2363, function(price) {
-				$("#test").text(price);
-			});
-		</script>
+	<body ng-app="forgingProfitsApp">
+		<h1 ng-bind="pageTitle"></h1>
+		
+		<!-- Injected with Partials -->
+		<div ng-view></div>
+		
+		<footer>
+			<span>Footer space holder</span>
+		</footer>
 	</body>
 </html>
