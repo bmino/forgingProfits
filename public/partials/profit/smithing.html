@@ -1,3 +1,75 @@
 <div class="partial-profit-smithing">
-	<span>Smithing</span>
+	<table>
+		<thead>
+			<tr>
+				<th colspan="2">Superheating Rune</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Cycle Time</td>
+				<td><input type="number" ng-model="superheat.rune.cycleTime"></td>
+			</tr>
+			<tr>
+				<td>Bars In Cycle</td>
+				<td><input type="number" ng-model="superheat.rune.cycleBars"></td>
+			</tr>
+			<tr>
+				<td>Cost / Bar</td>
+				<td><input type="number" ng-value="superheat.rune.materialCostPerBar()" disabled></td>
+			</tr>
+			<tr>
+				<td>XP / Bar</td>
+				<td><input type="number" ng-value="superheat.rune.xpPerBar()" disabled></td>
+			</tr>
+			
+			<tr>
+				<td>Normal Bars</td>
+				<td><input type="number" ng-value="superheat.rune.normalBarsPerSec()" disabled></td>
+			</tr>
+			<tr>
+				<td>Bonus Bars</td>
+				<td><input type="number" ng-value="superheat.rune.bonusBarsPerSec()" disabled></td>
+			</tr>
+			<tr>
+				<td>Bars / Sec</td>
+				<td><input type="number" ng-value="superheat.rune.barsPerSec()" disabled></td>
+			</tr>
+			
+			<tr>
+				<td>Ores</td>
+				<td><input type="number" ng-value="superheat.rune.oreCostPerSec()" disabled></td>
+			</tr>
+			<tr>
+				<td>Nature Runes</td>
+				<td><input type="number" ng-value="superheat.rune.natCostPerSec()" disabled></td>
+			</tr>
+			<tr>
+				<td>Cost / Sec</td>
+				<td><input type="number" ng-value="superheat.rune.costPerSec()" disabled></td>
+			</tr>
+			
+			<tr>
+				<td>Profit / Bar</td>
+				<td><input type="number" ng-value="superheat.rune.profitPerBar()" disabled></td>
+			</tr>
+			<tr>
+				<td>Profit / Min</td>
+				<td><input type="number" ng-value="superheat.rune.profitPerMin()" disabled></td>
+			</tr>
+			<tr>
+				<td>Profit / Hour</td>
+				<td><input type="number" ng-value="superheat.rune.profitPerHour()" disabled></td>
+			</tr>
+			
+			<tr>
+				<td>XP / Hour</td>
+				<td><input type="number" ng-value="superheat.rune.xpPerHour()" disabled></td>
+			</tr>
+			<tr>
+				<td>Profit / XP</td>
+				<td><input type="number" ng-value="superheat.rune.profitPerXp()" disabled></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
