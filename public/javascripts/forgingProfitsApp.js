@@ -2,7 +2,7 @@ angular.module('forgingProfitsApp', [
 	'ngRoute',
 	'filters',
 	'services',
-//	'directives',
+	'directives',
 	'controllers'
 ])
 

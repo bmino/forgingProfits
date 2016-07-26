@@ -1,0 +1,73 @@
+<table>
+	<thead>
+		<tr>
+			<th colspan="2">Superheating {{title}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cycle Time</td>
+			<td><input type="number" ng-model="superheat.cycleTime"></td>
+		</tr>
+		<tr>
+			<td>Bars In Cycle</td>
+			<td><input type="number" ng-model="superheat.cycleBars"></td>
+		</tr>
+		<tr>
+			<td>Cost / Bar</td>
+			<td><input ng-value="superheat.materialCostPerBar() | number: 0 " disabled></td>
+		</tr>
+		<tr>
+			<td>XP / Bar</td>
+			<td><input ng-value="superheat.xpPerBar() | number: 0 " disabled></td>
+		</tr>
+		
+		<tr>
+			<td>Normal Bars</td>
+			<td><input ng-value="superheat.normalBarsPerSec() | number: 3 " disabled></td>
+		</tr>
+		<tr>
+			<td>Bonus Bars</td>
+			<td><input ng-value="superheat.bonusBarsPerSec() | number: 3 " disabled></td>
+		</tr>
+		<tr>
+			<td>Bars / Sec</td>
+			<td><input ng-value="superheat.barsPerSec() | number: 3 " disabled></td>
+		</tr>
+		
+		<tr>
+			<td>Ores</td>
+			<td><input ng-value="superheat.oreCostPerSec() | number: 0 " disabled></td>
+		</tr>
+		<tr>
+			<td>Nature Runes</td>
+			<td><input ng-value="superheat.natCostPerSec() | number: 0 " disabled></td>
+		</tr>
+		<tr>
+			<td>Cost / Sec</td>
+			<td><input ng-value="superheat.costPerSec() | number: 0 " disabled></td>
+		</tr>
+		
+		<tr>
+			<td>Profit / Bar</td>
+			<td><input ng-value="superheat.profitPerBar() | number: 0 " disabled></td>
+		</tr>
+		<tr>
+			<td>Profit / Min</td>
+			<td><input ng-value="superheat.profitPerMin() | number: 0 " disabled></td>
+		</tr>
+		<tr>
+			<td>Profit / Hour</td>
+			<td><input ng-value="superheat.profitPerHour() | number: 0 " disabled></td>
+		</tr>
+		
+		<tr>
+			<td>XP / Hour</td>
+			<td><input ng-value="superheat.xpPerHour() | number: 0 " disabled></td>
+		</tr>
+		<tr>
+			<td>Profit / XP</td>
+			<td><input ng-value="superheat.profitPerXp() | number: 1 " disabled></td>
+		</tr>
+	</tbody>
+</table>
