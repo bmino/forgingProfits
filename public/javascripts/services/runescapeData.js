@@ -1,5 +1,5 @@
 angular.module('services')
-.service('runescapeData', function($http, $q, runescapeApi) {
+.service('runescapeData', function($q, runescapeApi) {
 	
 	/* ************** */
 	/* Dynamic Values */
@@ -7,23 +7,23 @@ angular.module('services')
 	
 	var sets = {
 		rune: {
-			bar: {id: 2363, price: null, loaded: false},
-			ore: {id: 451, price: null, loaded: false},
-			plate: {id: 1127, price: null, loaded: false},
-			twoHander: {id: 1319, price: null, loaded: false}
+			bar: {id: 2363, price: null, loaded: false, deferred: null},
+			ore: {id: 451, price: null, loaded: false, deferred: null},
+			plate: {id: 1127, price: null, loaded: false, deferred: null},
+			twoHander: {id: 1319, price: null, loaded: false, deferred: null}
 		},
 		
 		addy: {
-			bar: {id: 2361, price: null, loaded: false},
-			ore: {id: 449, price: null, loaded: false},
-			plate: {id: 1123, price: null, loaded: false},
-			twoHander: {id: 1317, price: null, loaded: false}
+			bar: {id: 2361, price: null, loaded: false, deferred: null},
+			ore: {id: 449, price: null, loaded: false, deferred: null},
+			plate: {id: 1123, price: null, loaded: false, deferred: null},
+			twoHander: {id: 1317, price: null, loaded: false, deferred: null}
 		},
 		
 		material: {
-			coal: {id: 453, price: null, loaded: false},
-			nat: {id: 561, price: null, loaded: false},
-			forge: {id: 31041, price: null, loaded: false}
+			coal: {id: 453, price: null, loaded: false, deferred: null},
+			nat: {id: 561, price: null, loaded: false, deferred: null},
+			forge: {id: 31041, price: null, loaded: false, deferred: null}
 		}
 	};
 	
@@ -78,13 +78,13 @@ angular.module('services')
 		switch (type) {
 			// Dynamic
 			case 'material':
-				return lookupSet(sets.material).then(lookupSuccess, lookupFailure);
+				return lookupSet(sets.material, type).then(lookupSuccess, lookupFailure);
 				break;
 			case 'rune':
-				return lookupSet(sets.rune).then(lookupSuccess, lookupFailure);
+				return lookupSet(sets.rune, type).then(lookupSuccess, lookupFailure);
 				break;
 			case 'addy':
-				return lookupSet(sets.addy).then(lookupSuccess, lookupFailure);
+				return lookupSet(sets.addy, type).then(lookupSuccess, lookupFailure);
 				break;
 			// Static
 			case 'exp':
@@ -111,9 +111,23 @@ angular.module('services')
 
 	
 	this.clearCache = function() {
+		console.log('Clearing the entire cache');
 		for (var item in sets) {
 			sets[item]['loaded'] = false;
 		}
+	}
+	
+	this.loadCache = function() {
+		console.log('Loading the entire cache');
+		var deferral = $q.defer();
+		var promises = [];
+		for (var item in sets) {
+			promises.push(lookupSet(sets[item]));
+		}
+		$q.all(promises).then(function(data) {
+			deferral.resolve(true);
+		});
+		return deferral.promise;
 	}
 
 	
@@ -129,7 +143,7 @@ angular.module('services')
 	 * @result ex. {rune: {bar: 800, ore: 240}
 	 *
 	 */
-	function lookupSet(set) {
+	function lookupSet(set, type) {
 		var deferral = $q.defer();
 		var promises = [];
 		
@@ -155,21 +169,28 @@ angular.module('services')
 		var deferred = $q.defer();
 		
 		if (isFreshData(item)) {
-			// Cache hit
-			console.log('cache hit');
-			deferred.resolve(item.price);
+			console.log('Cache hit');
+			deferred.resolve(getData(item));
 		} else {
-			// Cache miss
-			console.log('cache event');
-			runescapeApi.getPrice(item.id).then(
-				function (price) {
-					storeData(item, price);
-					deferred.resolve(price);
-				},
-				function (error) {
-					deferred.reject(error);
-				}
-			);
+			// Is something already looking this up?			
+			if (item.deferred) {
+				console.log('Cache miss - API call already issued.');
+				return item.deferred;
+			} else {
+				console.log('Cache miss - issuing API call.');
+				item.deferred = deferred;
+				runescapeApi.getPrice(item.id).then(
+					function (price) {
+						storeData(item, price);
+						deferred.resolve(price);
+					},
+					function (error) {
+						console.error('Failed to lookup'+ item);
+						console.error(error);
+						deferred.reject(error);
+					}
+				);
+			}
 		}
 		return deferred.promise;
 	}
@@ -179,9 +200,9 @@ angular.module('services')
 	 *
 	 */
 	var TTL_MINUTES = 5;
-	var TIME_TO_LIVE = TTL_MINUTES * 1000 * 60;
+	var TIME_TO_LIVE_MS = TTL_MINUTES * 60 * 1000;
 	function isFreshData(item) {
-		if (item.loaded && new Date() - item.loaded < TIME_TO_LIVE) {
+		if (item.loaded && new Date() - item.loaded < TIME_TO_LIVE_MS) {
 			// Recent data
 			return true;
 		}
@@ -195,21 +216,15 @@ angular.module('services')
 	function storeData(item, price) {
 		item.price = price;
 		item.loaded = new Date();
+		item.deferred = null;
 	}
 	
-	
-	function isLoading() {
-		for (var set in sets) {
-			if (!setLoaded(sets[set])) return true;
-		}
-		return false;
-	}
-	
-	function setLoaded(set) {
-		for (var item in set) {
-			if (!set[item]['loaded']) return false;
-		}
-		return true;
+	/*
+	 * Gets price from the cache
+	 *
+	 */
+	function getData(item) {
+		return item.price;
 	}
 
 });
