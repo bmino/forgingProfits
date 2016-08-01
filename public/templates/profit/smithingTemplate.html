@@ -1,10 +1,18 @@
-<table>
+<table ng-show="loaded">
 	<thead>
 		<tr>
 			<th colspan="2">Smithing {{title}}</th>
 		</tr>
 	</thead>
 	<tbody>
+		<tr>
+			<td>Portable Forge</td>
+			<td><span ng-bind="smithing.portable ? 'Yes' : 'No'"></span> <button style="float: right;" ng-click="smithing.togglePortable()">Switch</button></td>
+		</tr>
+		<tr>
+			<td>Wasteless Smithing</td>
+			<td><span ng-bind="smithing.wastelessSmithing ? 'Yes' : 'No'"></span> <button style="float: right;" ng-click="smithing.toggleWasteless()">Switch</button></td>
+		</tr>
 		<tr>
 			<td>Cycle Time</td>
 			<td><input type="number" ng-model="smithing.cycleTime"></td>
@@ -13,19 +21,10 @@
 			<td>Items Produced</td>
 			<td><input type="number" ng-model="smithing.cycleProduced"></td>
 		</tr>
-		<tr>
-			<td>Bars / Item</td>
-			<td><input ng-value="smithing.barsPerItem() | number: 2 " disabled></td>
-		</tr>
-		<tr>
-			<td>Cost / Item</td>
-			<td><input ng-value="smithing.costPerItem() | number: 0 " disabled></td>
-		</tr>
-		<tr>
-			<td>XP / Item</td>
-			<td><input ng-value="smithing.xpPerItem() | number: 2 " disabled></td>
-		</tr>
 		
+		<tr>
+			<td colspan="2">Items Per Second</td>
+		</tr>
 		<tr>
 			<td>Normal Items</td>
 			<td><input ng-value="smithing.normalItemsPerSec() | number: 3 " disabled></td>
@@ -35,10 +34,13 @@
 			<td><input ng-value="smithing.bonusItemsPerSec() | number: 3 " disabled></td>
 		</tr>
 		<tr>
-			<td>Items / Sec</td>
+			<td>Items / Sec.</td>
 			<td><input ng-value="smithing.itemsPerSec() | number: 3 " disabled></td>
 		</tr>
 		
+		<tr>
+			<td colspan="2">Costs Per Second</td>
+		</tr>
 		<tr>
 			<td>Bars</td>
 			<td><input ng-value="smithing.barCostPerSec() | number: 0 " disabled></td>
@@ -48,10 +50,13 @@
 			<td><input ng-value="smithing.forgeAmortization() | number: 0 " disabled></td>
 		</tr>
 		<tr>
-			<td>Cost / Sec</td>
+			<td>Cost / Sec.</td>
 			<td><input ng-value="smithing.costPerSec() | number: 0 " disabled></td>
 		</tr>
 		
+		<tr>
+			<td colspan="2">Profit Metrics</td>
+		</tr>
 		<tr>
 			<td>Profit / Item</td>
 			<td><input ng-value="smithing.profitPerItem() | number: 0 " disabled></td>
@@ -66,12 +71,19 @@
 		</tr>
 		
 		<tr>
+			<td colspan="2">Experience Metrics</td>
+		</tr>
+		<tr>
+			<td>XP / Item</td>
+			<td><input ng-value="smithing.xpPerItem() | number: 2 " disabled></td>
+		</tr>
+		<tr>
 			<td>XP / Hour</td>
 			<td><input ng-value="smithing.xpPerHour() | number: 0 " disabled></td>
 		</tr>
 		<tr>
-			<td>Profit / XP</td>
-			<td><input ng-value="smithing.profitPerXp() | number: 1 " disabled></td>
+			<td>Cost / XP</td>
+			<td><input ng-value="smithing.costPerXp() | number: 1 " disabled></td>
 		</tr>
 	</tbody>
 </table>

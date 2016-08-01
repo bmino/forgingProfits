@@ -1,10 +1,14 @@
-<table>
+<table ng-show="loaded">
 	<thead>
 		<tr>
 			<th colspan="2">Smelting {{title}}</th>
 		</tr>
 	</thead>
 	<tbody>
+		<tr>
+			<td>Portable Forge</td>
+			<td><span ng-bind="smelting.portable ? 'Yes' : 'No'"></span> <button style="float: right;" ng-click="smelting.togglePortable()">Switch</button></td>
+		</tr>
 		<tr>
 			<td>Cycle Time</td>
 			<td><input type="number" ng-model="smelting.cycleTime"></td>
@@ -13,15 +17,10 @@
 			<td>Bars In Cycle</td>
 			<td><input type="number" ng-model="smelting.cycleBars"></td>
 		</tr>
-		<tr>
-			<td>Cost / Bar</td>
-			<td><input ng-value="smelting.materialCostPerBar() | number: 0 " disabled></td>
-		</tr>
-		<tr>
-			<td>XP / Bar</td>
-			<td><input ng-value="smelting.xpPerBar() | number: 0 " disabled></td>
-		</tr>
 		
+		<tr>
+			<td colspan="2">Bars Per Second</td>
+		</tr>
 		<tr>
 			<td>Normal Bars</td>
 			<td><input ng-value="smelting.normalBarsPerSec() | number: 3 " disabled></td>
@@ -31,10 +30,13 @@
 			<td><input ng-value="smelting.bonusBarsPerSec() | number: 3 " disabled></td>
 		</tr>
 		<tr>
-			<td>Bars / Sec</td>
+			<td>Bars / Sec.</td>
 			<td><input ng-value="smelting.barsPerSec() | number: 3 " disabled></td>
 		</tr>
 		
+		<tr>
+			<td colspan="2">Costs Per Second</td>
+		</tr>
 		<tr>
 			<td>Ores</td>
 			<td><input ng-value="smelting.oreCostPerSec() | number: 0 " disabled></td>
@@ -44,14 +46,17 @@
 			<td><input ng-value="smelting.forgeAmortization() | number: 0 " disabled></td>
 		</tr>
 		<tr>
-			<td>Cost / Sec</td>
+			<td>Cost / Sec.</td>
 			<td><input ng-value="smelting.costPerSec() | number: 0 " disabled></td>
 		</tr>
 		
+		
+		<tr>
+			<td colspan="2">Profit Metrics</td>
+		</tr>
 		<tr>
 			<td>Profit / Bar</td>
-			<td><input ng-value="smelting.profitPerBar() | number: 0 " disabled></td>
-		</tr>
+			<td><input ng-value="smelting.profitPerBar() | number: 0" disabled></td>
 		<tr>
 			<td>Profit / Min</td>
 			<td><input ng-value="smelting.profitPerMin() | number: 0 " disabled></td>
@@ -61,13 +66,21 @@
 			<td><input ng-value="smelting.profitPerHour() | number: 0 " disabled></td>
 		</tr>
 		
+		
+		<tr>
+			<td colspan="2">Experience Metrics</td>
+		</tr>
+		<tr>
+			<td>XP / Bar</td>
+			<td><input ng-value="smelting.xpPerBar() | number: 0 " disabled></td>
+		</tr>
 		<tr>
 			<td>XP / Hour</td>
 			<td><input ng-value="smelting.xpPerHour() | number: 0 " disabled></td>
 		</tr>
 		<tr>
-			<td>Profit / XP</td>
-			<td><input ng-value="smelting.profitPerXp() | number: 1 " disabled></td>
+			<td>Cost / XP</td>
+			<td><input ng-value="smelting.costPerXp() | number: 1 " disabled></td>
 		</tr>
 	</tbody>
 </table>
