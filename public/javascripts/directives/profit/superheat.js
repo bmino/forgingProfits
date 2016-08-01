@@ -19,6 +19,7 @@ angular.module('directives')
 					scope.material = data.material;
 					scope.exp = data.exp;
 					scope.coalCount = data.coalCount;
+					scope.loaded = true;
 				}).then(createScope);
 			}
 			
@@ -51,7 +52,7 @@ angular.module('directives')
 												return scope['superheat'].oreCostPerSec() + scope['superheat'].natCostPerSec();
 											},
 					profitPerBar:			function() {
-												return scope[type]['bar']['price'] - (scope[type]['ore']['price'] + 8*scope['material']['coal']['price']);
+												return scope[type]['bar']['price'] - (scope[type]['ore']['price'] + scope['coalCount'][type] * scope['material']['coal']['price']);
 											},
 					profitPerMin:			function() {
 												return ((scope[type]['bar']['price'] * scope['superheat'].barsPerSec()) - scope['superheat'].costPerSec()) * 60;
@@ -62,8 +63,8 @@ angular.module('directives')
 					xpPerHour:				function() {
 												return (scope['superheat'].xpPerBar() * scope['superheat']['cycleBars']) / scope['superheat']['cycleTime'] * 60 * 60;
 											},
-					profitPerXp:			function() {
-												return scope['superheat'].profitPerHour() / scope['superheat'].xpPerHour();
+					costPerXp:				function() {
+												return (scope['superheat'].profitPerHour() * -1) / scope['superheat'].xpPerHour();
 											}
 				};
 			}
