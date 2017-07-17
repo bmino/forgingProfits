@@ -10,12 +10,10 @@ angular.module('forgingProfitsApp', [
 .config(function ($routeProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: '/partials/home.html',
-			controller: 'homeController'
+			templateUrl: '/partials/home.html'
 		})
 		.when('/profit/smithing', {
-			templateUrl: '/partials/profit/smithing.html',
-			controller: 'smithingController'
+			templateUrl: '/partials/profit/smithing.html'
 		})
 		.otherwise({
 			redirectTo: '/'
