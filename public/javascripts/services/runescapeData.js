@@ -78,13 +78,13 @@ angular.module('services')
 		switch (type) {
 			// Dynamic
 			case 'material':
-				return lookupSet(sets.material, type).then(lookupSuccess, lookupFailure);
+				return lookupSet(sets.material).then(lookupSuccess, lookupFailure);
 				break;
 			case 'rune':
-				return lookupSet(sets.rune, type).then(lookupSuccess, lookupFailure);
+				return lookupSet(sets.rune).then(lookupSuccess, lookupFailure);
 				break;
 			case 'addy':
-				return lookupSet(sets.addy, type).then(lookupSuccess, lookupFailure);
+				return lookupSet(sets.addy).then(lookupSuccess, lookupFailure);
 				break;
 			// Static
 			case 'exp':
@@ -101,7 +101,7 @@ angular.module('services')
 			default:
 				return $q.when(null);
 		}
-	}
+	};
 	function lookupSuccess(result) {
 		return result;
 	}
@@ -112,117 +112,116 @@ angular.module('services')
 	
 	this.clearCache = function() {
 		console.log('Clearing the entire cache');
-		for (var item in sets) {
-			sets[item]['loaded'] = false;
-		}
-	}
+		angular.forEach(sets, function(set) {
+			angular.forEach(set, function(item) {
+                item['loaded'] = false;
+			});
+		});
+	};
 	
 	this.loadCache = function() {
 		console.log('Loading the entire cache');
 		var deferral = $q.defer();
 		var promises = [];
-		for (var item in sets) {
-			promises.push(lookupSet(sets[item]));
-		}
+		angular.forEach(sets, function(set) {
+			promises.push(lookupSet(set));
+		});
 		$q.all(promises).then(function(data) {
 			deferral.resolve(true);
 		});
 		return deferral.promise;
-	}
+	};
 
 	
 	/* ************** */
 	/* Helper Methods */
 	/* ************** */
-	
-	/*
-	 * Get prices for a set
-	 *
-	 * @param set
-	 *
-	 * @result ex. {rune: {bar: 800, ore: 240}
-	 *
-	 */
-	function lookupSet(set, type) {
+
+    /**
+	 * Get prices for a set.
+     * @param set
+     * @returns {Promise}
+	 * @example {rune: {bar: 800, ore: 240}
+     */
+	function lookupSet(set) {
 		var deferral = $q.defer();
+        var promise;
 		var promises = [];
-		
-		for (var item in set) {
-			var promise = lookupItem(set[item]);
+
+		angular.forEach(set, function(item) {
+			promise = lookupItem(item);
 			promises.push(promise);
-		}
+		});
+
 		$q.all(promises).then(function(data) {
 			deferral.resolve(set);
 		});
 		return deferral.promise;
 	}
-	
-	/* 
-	 * Get price for an item
-	 *
-	 * @param item
-	 *
-	 * @result ex. 1,234
-	 *
-	 */
+
+    /**
+	 * Get price for an item.
+     * @param item
+     * @returns {Promise}
+	 * @example 1,234
+     */
 	function lookupItem(item) {
 		var deferred = $q.defer();
-		
+
 		if (isFreshData(item)) {
 			console.log('Cache hit');
-			deferred.resolve(getData(item));
-		} else {
-			// Is something already looking this up?			
-			if (item.deferred) {
-				console.log('Cache miss - API call already issued.');
-				return item.deferred;
-			} else {
-				console.log('Cache miss - issuing API call.');
-				item.deferred = deferred;
-				runescapeApi.getPrice(item.id).then(
-					function (price) {
-						storeData(item, price);
-						deferred.resolve(price);
-					},
-					function (error) {
-						console.error('Failed to lookup'+ item);
-						console.error(error);
-						deferred.reject(error);
-					}
-				);
-			}
+			return deferred.resolve(getData(item));
 		}
-		return deferred.promise;
+
+		if (item.deferred) {
+			console.log('Cache miss - API call already issued.');
+			return item.deferred;
+		}
+
+		console.log('Cache miss - issuing API call.');
+		item.deferred = deferred;
+		return runescapeApi.getPrice(item.id).then(
+			function (price) {
+				storeData(item, price);
+				return deferred.resolve(price);
+			},
+			function (error) {
+				console.error('Failed to lookup'+ item);
+				console.error(error);
+				return deferred.reject(error);
+			}
+		);
 	}
-	
-	/*
-	 * Checks for no data, or expired data
-	 *
-	 */
+
+    /**
+	 * Checks for empty or expired data.
+     * @param item
+     */
 	var TTL_MINUTES = 5;
 	var TIME_TO_LIVE_MS = TTL_MINUTES * 60 * 1000;
 	function isFreshData(item) {
-		if (item.loaded && new Date() - item.loaded < TIME_TO_LIVE_MS) {
-			// Recent data
-			return true;
-		}
-		return false;
+		var timeLived = new Date() - item.loaded;
+		if (!item.loaded) return false;
+		if (timeLived > TIME_TO_LIVE_MS) return false;
+		return true;
 	}
 	
-	/*
-	 * Store price in the cache
-	 *
-	 */
+
+    /**
+	 * Store price in the cache.
+     * @param item
+     * @param price
+     */
 	function storeData(item, price) {
 		item.price = price;
 		item.loaded = new Date();
 		item.deferred = null;
 	}
-	
-	/*
-	 * Gets price from the cache
-	 *
-	 */
+
+    /**
+	 * Gets price from the cache.
+     * @param item
+     */
 	function getData(item) {
 		return item.price;
 	}

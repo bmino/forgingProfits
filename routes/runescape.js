@@ -16,7 +16,7 @@ router.get('/category/:category', function(req, res, next) {
 
 /* GET current price */
 router.get('/price/:itemId', function(req, res, next) {
-	var _id = req.params.itemId;;
+	var _id = req.params.itemId;
 	runescape.rs.ge.graphData(_id).then(function(data) {
 		
 		var obj = data.daily;
@@ -29,7 +29,7 @@ router.get('/price/:itemId', function(req, res, next) {
 
 /* GET graph data */
 router.get('/graphData/:itemId', function(req, res, next) {
-	var _id = req.params.itemId;;
+	var _id = req.params.itemId;
 	runescape.rs.ge.graphData(_id).then(function(item) {
 		res.json({message: item});
 	});
@@ -37,7 +37,7 @@ router.get('/graphData/:itemId', function(req, res, next) {
 
 /* GET item information */
 router.get('/itemInformation/:itemId', function(req, res, next) {
-	var _id = req.params.itemId;;
+	var _id = req.params.itemId;
 	runescape.rs.ge.itemInformation(_id).then(function(item) {
 		res.json({message: item});
 	});
