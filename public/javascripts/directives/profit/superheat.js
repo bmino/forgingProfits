@@ -6,8 +6,6 @@ angular.module('directives')
 			var type = attrs.type;
 			scope.title = attrs.title;
 			
-			init();
-			
 			function init() {
 				$q.all({
 					type:			runescapeData.getSet(type),
@@ -68,6 +66,8 @@ angular.module('directives')
 											}
 				};
 			}
+
+			init();
 			
 		},
 		templateUrl: '/templates/profit/superheatTemplate.html'
