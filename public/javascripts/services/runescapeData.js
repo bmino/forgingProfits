@@ -1,5 +1,5 @@
 angular.module('services')
-.service('runescapeData', function($q, runescapeApi) {
+.service('runescapeData', ['$q', 'runescapeApi', function($q, runescapeApi) {
 	
 	/* ************** */
 	/* Dynamic Values */
@@ -227,4 +227,4 @@ angular.module('services')
 		return item.price;
 	}
 
-});
+}]);

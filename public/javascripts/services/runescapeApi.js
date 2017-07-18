@@ -1,5 +1,5 @@
 angular.module('services')
-.service('runescapeApi', function($http) {
+.service('runescapeApi', ['$http', function($http) {
 	
 	this.getPrice = function(itemId) {
 		var request = $http({
@@ -24,4 +24,4 @@ angular.module('services')
 		return null;
 	}
 	
-});
+}]);

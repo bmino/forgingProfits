@@ -1,5 +1,5 @@
 angular.module('directives')
-.directive('smelting', function($q, runescapeData) {
+.directive('smelting', ['$q', 'runescapeData', function($q, runescapeData) {
 	return {
 		scope: {},
 		link: function(scope, element, attrs) {
@@ -83,4 +83,4 @@ angular.module('directives')
 		},
 		templateUrl: '/templates/profit/smeltingTemplate.html'
 	};
-});
+}]);

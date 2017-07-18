@@ -1,5 +1,5 @@
 angular.module('directives')
-.directive('superheat', function($q, runescapeData) {
+.directive('superheat', ['$q', 'runescapeData', function($q, runescapeData) {
 	return {
 		scope: {},
 		link: function(scope, element, attrs) {
@@ -72,4 +72,4 @@ angular.module('directives')
 		},
 		templateUrl: '/templates/profit/superheatTemplate.html'
 	};
-});
+}]);

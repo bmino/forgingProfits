@@ -7,7 +7,7 @@ angular.module('forgingProfitsApp', [
 ])
 
 
-.config(function ($routeProvider) {
+.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: '/partials/home.html'
@@ -19,4 +19,4 @@ angular.module('forgingProfitsApp', [
 			redirectTo: '/'
 		});
 
-});
+}]);
