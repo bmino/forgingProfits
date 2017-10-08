@@ -1,0 +1,37 @@
+.profit {
+    background-color: rgb(80, 63, 26);
+    border: 2px solid #7b5d2a;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+
+.profit .profit-input span {
+    display: inline-block;
+    width: 100px;
+}
+
+.profit .profit-input input {
+    width: 60px;
+}
+
+.profit .profit-header {
+    font-size: 30px;
+    padding: 5px;
+}
+
+.profit .profit-body .profit-group {
+    border: 1px solid rgb(182, 156, 53);
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.profit .profit-body .profit-group .profit-group-title {
+    font-size: 20px;
+    border-bottom: 1px solid rgb(182, 156, 53);
+}
+
+.profit .profit-body .profit-group .profit-group-item span {
+    display: inline-block;
+    width: 48%;
+}

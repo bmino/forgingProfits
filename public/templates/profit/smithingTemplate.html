@@ -7,11 +7,11 @@
 	<tbody>
 		<tr>
 			<td>Portable Forge</td>
-			<td><span ng-bind="smithing.portable ? 'Yes' : 'No'"></span> <button style="float: right;" ng-click="smithing.togglePortable()">Switch</button></td>
+			<td><button style="float: right;" ng-click="smithing.togglePortable()" ng-bind="smithing.portable ? 'Using' : 'Not Using'"></button></td>
 		</tr>
 		<tr>
 			<td>Wasteless Smithing</td>
-			<td><span ng-bind="smithing.wastelessSmithing ? 'Yes' : 'No'"></span> <button style="float: right;" ng-click="smithing.toggleWasteless()">Switch</button></td>
+			<td><button style="float: right;" ng-click="smithing.toggleWasteless()" ng-bind="smithing.wastelessSmithing ? 'Using' : 'Not Using'"></button></td>
 		</tr>
 		<tr>
 			<td>Cycle Time</td>
